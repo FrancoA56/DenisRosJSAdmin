@@ -35,16 +35,16 @@
           <router-link to="/dashboard/brands">Marcas</router-link>
         </a-menu-item>
         <a-menu-item key="3">
+      <template #icon>
+        <unordered-list-outlined />
+      </template>
+      <router-link to="/dashboard/users">Usuarios</router-link>
+    </a-menu-item>
+        <a-menu-item key="4">
           <template #icon>
             <shopping-outlined />
           </template>
           <router-link to="/dashboard/products">Productos</router-link>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <template #icon>
-            <user-outlined />
-          </template>
-          <span>Usuarios</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -97,7 +97,6 @@ import { logout } from '../services/auth';
 import { 
   UnorderedListOutlined, 
   ShoppingOutlined, 
-  UserOutlined,
   LogoutOutlined
 } from '@ant-design/icons-vue';
 
@@ -105,7 +104,6 @@ export default {
   components: {
     UnorderedListOutlined,
     ShoppingOutlined,
-    UserOutlined,
     LogoutOutlined
   },
   setup() {

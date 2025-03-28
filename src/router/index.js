@@ -5,8 +5,11 @@ import CategoryList from '../components/Category/CategoryList.vue';
 import CategoryForm from '../components/Category/CategoryForm.vue';
 import BrandList from "../components/Brand/BrandList.vue"
 import BrandForm from "../components/Brand/BrandForm.vue"
-import ProductForm from "../components/Products/ProductForm.vue"
-import ProductList from "../components/Products/ProductList.vue"
+import UserList from "../components/Users/UserList.vue"
+import UserForm from "../components/Users/UserForm.vue"
+
+// import ProductForm from "../components/Products/ProductForm.vue"
+// import ProductList from "../components/Products/ProductList.vue"
 
 const routes = [
   { path: '/login', component: Login },
@@ -20,9 +23,12 @@ const routes = [
       { path: 'brands', component: BrandList},
       { path: 'brands/create', component: BrandForm },
       { path: 'brands/edit/:id', component: BrandForm, props: true },
-      { path: 'products', component: ProductList},
-      { path: 'products/create', component: ProductForm},
-      { path: 'products/edit/:id', component: ProductForm, props: true},
+      { path: 'users', component: UserList},
+      { path: 'users/create', component: UserForm },
+      { path: 'users/edit/:id', component: UserForm, props: true },
+      // { path: 'products', component: ProductList},
+      // { path: 'products/create', component: ProductForm},
+      // { path: 'products/edit/:id', component: ProductForm, props: true},
     ],
   },
   { path: '/', redirect: '/login' },
