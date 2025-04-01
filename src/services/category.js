@@ -1,18 +1,36 @@
-import api from './api';
+import api from "./api";
 
-export const getCategories = async (params = {}) => {
-  const response = await api.get("category", { 
-    params: {
-      includeDisabled: true, // O false según lo necesites
-      ...params
-    }
-  });
-  return response;
+export const getCategories = async () => {
+  try {
+    const response = await api.get("category", {
+      params: {
+        includeDisabled: true,
+      },
+    });
+    return response.data; // Asegúrate que devuelve un array
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return []; // Devuelve array vacío en caso de error
+  }
+};
+
+export const getCategoriesAble = async () => {
+  try {
+    const response = await api.get("category", {
+      params: {
+        includeDisabled: false,
+      },
+    });
+    return response.data; // Asegúrate que devuelve un array
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return []; // Devuelve array vacío en caso de error
+  }
 };
 
 export const getCategoryById = async (id) => {
-const response = await api.get(`category/${id}`);
-return response;
+  const response = await api.get(`category/${id}`);
+  return response;
 };
 
 export const createCategory = async (category) => {
@@ -31,6 +49,6 @@ export const toggleCategoryStatus = async (id) => {
 };
 
 export const deleteCategory = async (id) => {
-  const response = await api.delete(`category/${id}`)
-  return response
+  const response = await api.delete(`category/${id}`);
+  return response;
 };

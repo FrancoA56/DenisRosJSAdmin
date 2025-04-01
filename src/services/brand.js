@@ -7,7 +7,17 @@ export const getBrands = async (params = {}) => {
       ...params
     }
   });
-  return response;
+  return response.data;
+};
+
+export const getBrandsAble = async (params = {}) => {
+  const response = await api.get("brand", { 
+    params: {
+      includeDisabled: false, // O false según lo necesites
+      ...params
+    }
+  });
+  return response.data;
 };
 
 export const getBrandById = async (id) => {

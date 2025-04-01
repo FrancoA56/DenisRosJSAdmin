@@ -10,11 +10,11 @@
     >
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'logo'">
-          <img 
-            v-if="record.logo" 
-            :src="record.logo" 
-            alt="Logo" 
-            style="max-height: 50px; max-width: 100px;"
+          <img
+            v-if="record.logo"
+            :src="record.logo"
+            alt="Logo"
+            style="max-height: 50px; max-width: 100px"
           />
           <span v-else>Sin logo</span>
         </template>
@@ -23,7 +23,11 @@
           <a-button @click="toggleBrand(record.id)">
             {{ record.isDisabled ? "Habilitar" : "Deshabilitar" }}
           </a-button>
-          <a-button danger @click="showDeleteConfirm(record.id)">Eliminar</a-button>
+        </template>
+        <template v-if="column.key === 'delete'">
+          <a-button danger @click="showDeleteConfirm(record.id)"
+            >Eliminar</a-button
+          >
         </template>
       </template>
     </a-table>
@@ -43,7 +47,11 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { getBrands, toggleBrandStatus, deleteBrand } from "../../services/brand";
+import {
+  getBrands,
+  toggleBrandStatus,
+  deleteBrand,
+} from "../../services/brand";
 import { message } from "ant-design-vue";
 
 export default {
@@ -85,14 +93,14 @@ export default {
         sorter: true,
         sortDirections: ["ascend", "descend"],
       },
-      { 
-        title: "Logo", 
+      {
+        title: "Logo",
         key: "logo",
         customRender: ({ record }) => {
-          return record.logo 
-            ? `<img src="${record.logo}" style="max-height: 50px; max-width: 100px;" />` 
-            : 'Sin logo';
-        }
+          return record.logo
+            ? `<img src="${record.logo}" style="max-height: 50px; max-width: 100px;" />`
+            : "Sin logo";
+        },
       },
       {
         title: "Estado",
@@ -102,12 +110,15 @@ export default {
           { text: "Habilitados", value: "enabled" },
           { text: "Deshabilitados", value: "disabled" },
         ],
-        filteredValue: filterState.value.status ? [filterState.value.status] : [],
+        filteredValue: filterState.value.status
+          ? [filterState.value.status]
+          : [],
         customRender: ({ record }) => {
           return record.isDisabled ? "❌ Deshabilitado" : "✔️ Habilitado";
         },
       },
       { title: "Acciones", key: "actions" },
+      { title: "Eliminar", key: "delete" },
     ];
 
     const fetchBrands = async () => {
@@ -123,7 +134,9 @@ export default {
 
         const response = await getBrands(params);
         brands.value = response.data || response; // Ajuste para diferentes formatos de respuesta
-        pagination.value.total = response.total || (response.data ? response.data.length : response.length);
+        pagination.value.total =
+          response.total ||
+          (response.data ? response.data.length : response.length);
       } catch (error) {
         message.error("Error al obtener marcas");
         console.error("Error al obtener marcas:", error);

@@ -1,37 +1,36 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Dashboard from '../views/dashboardMain.vue';
-import Login from '../views/userLogin.vue';
-import CategoryList from '../components/Category/CategoryList.vue';
-import CategoryForm from '../components/Category/CategoryForm.vue';
-import BrandList from "../components/Brand/BrandList.vue"
-import BrandForm from "../components/Brand/BrandForm.vue"
-import UserList from "../components/Users/UserList.vue"
-import UserForm from "../components/Users/UserForm.vue"
-
-// import ProductForm from "../components/Products/ProductForm.vue"
-// import ProductList from "../components/Products/ProductList.vue"
+import { createRouter, createWebHistory } from "vue-router";
+import Dashboard from "../views/dashboardMain.vue";
+import Login from "../views/userLogin.vue";
+import CategoryList from "../components/Category/CategoryList.vue";
+import CategoryForm from "../components/Category/CategoryForm.vue";
+import BrandList from "../components/Brand/BrandList.vue";
+import BrandForm from "../components/Brand/BrandForm.vue";
+import UserList from "../components/Users/UserList.vue";
+import UserForm from "../components/Users/UserForm.vue";
+import ProductForm from "../components/Products/ProductForm.vue";
+import ProductList from "../components/Products/ProductList.vue";
 
 const routes = [
-  { path: '/login', component: Login },
+  { path: "/login", component: Login },
   {
-    path: '/dashboard',
+    path: "/dashboard",
     component: Dashboard,
     children: [
-      { path: 'categories', component: CategoryList },
-      { path: 'categories/create', component: CategoryForm },
-      { path: 'categories/edit/:id', component: CategoryForm, props: true },
-      { path: 'brands', component: BrandList},
-      { path: 'brands/create', component: BrandForm },
-      { path: 'brands/edit/:id', component: BrandForm, props: true },
-      { path: 'users', component: UserList},
-      { path: 'users/create', component: UserForm },
-      { path: 'users/edit/:id', component: UserForm, props: true },
-      // { path: 'products', component: ProductList},
-      // { path: 'products/create', component: ProductForm},
-      // { path: 'products/edit/:id', component: ProductForm, props: true},
+      { path: "categories", component: CategoryList },
+      { path: "categories/create", component: CategoryForm },
+      { path: "categories/edit/:id", component: CategoryForm, props: true },
+      { path: "brands", component: BrandList },
+      { path: "brands/create", component: BrandForm },
+      { path: "brands/edit/:id", component: BrandForm, props: true },
+      { path: "users", component: UserList },
+      { path: "users/create", component: UserForm },
+      { path: "users/edit/:id", component: UserForm, props: true },
+      { path: "products", component: ProductList },
+      { path: "products/create", component: ProductForm },
+      { path: "products/edit/:id", component: ProductForm, props: true },
     ],
   },
-  { path: '/', redirect: '/login' },
+  { path: "/", redirect: "/login" },
 ];
 
 const router = createRouter({
@@ -41,9 +40,9 @@ const router = createRouter({
 
 // Middleware para proteger rutas
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (to.meta.requiresAuth && !token) {
-    next('/login');
+    next("/login");
   } else {
     next();
   }

@@ -14,6 +14,8 @@
           <a-button @click="toggleCategory(record.id)">
             {{ record.isDisabled ? "Habilitar" : "Deshabilitar" }}
           </a-button>
+        </template>
+        <template v-if="column.key === 'delete'">
           <a-button danger @click="showDeleteConfirm(record.id)"
             >Eliminar</a-button
           >
@@ -41,7 +43,7 @@ import {
   toggleCategoryStatus,
   deleteCategory,
 } from "../../services/category";
-import { message } from 'ant-design-vue';
+import { message } from "ant-design-vue";
 
 export default {
   setup() {
@@ -98,21 +100,14 @@ export default {
         },
       },
       { title: "Acciones", key: "actions" },
+      { title: "Eliminar", key: "delete" },
     ];
 
     const fetchCategories = async () => {
       loading.value = true;
       try {
-        const params = {
-          sortBy: sortState.value.field,
-          sortOrder: sortState.value.order,
-          filterStatus: filterState.value.status,
-          page: pagination.value.current,
-          limit: pagination.value.pageSize,
-        };
-
-        const response = await getCategories(params);
-        categories.value = response.data;
+        const response = await getCategories();
+        categories.value = response;
         pagination.value.total = response.total || response.data.length;
       } catch (error) {
         console.error("Error al obtener categorías:", error);
@@ -158,7 +153,9 @@ export default {
       try {
         await toggleCategoryStatus(id);
         await fetchCategories();
+        message.success("Estado de la categoria actualizado");
       } catch (error) {
+        message.error("Error al cambiar estado");
         console.error("Error al cambiar estado:", error);
       }
     };
@@ -177,7 +174,7 @@ export default {
         try {
           await deleteCategory(categoryToDelete.value);
           await fetchCategories();
-          message.success('Categoría eliminada correctamente');
+          message.success("Categoría eliminada correctamente");
         } catch (error) {
           message.success("Error al eliminar:", error);
         } finally {
